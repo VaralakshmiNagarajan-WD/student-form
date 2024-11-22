@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .form-container {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3ec416;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #af560d;
+        }
+        .data-table {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            background: #ffffff;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .data-table th {
+            background: #3ec416;
+            color: #ffffff;
+        }
+        .data-table td {
+            color: #333;
+        }
+        .delete-btn {
+            background-color: #FF4C4C;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Student Form</h2>
+        <form id="studentForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course">Course</label>
+                <input type="text" id="course" name="course" placeholder="Enter your course" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <table class="data-table" id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be appended here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Get the form and table elements
+        const form = document.getElementById('studentForm');
+        const dataTable = document.getElementById('dataTable').querySelector('tbody');
+
+        // Add event listener for form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const course = document.getElementById('course').value;
+            const email = document.getElementById('email').value;
+
+            // Validate input
+            if (!name || !age || !gender || !course || !email) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            // Create a new row
+            const row = document.createElement('tr');
+
+            // Add table cells for each field and a delete button
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${age}</td>
+                <td>${gender}</td>
+                <td>${course}</td>
+                <td>${email}</td>
+                <td><button class="delete-btn">Delete</button></td>
+            `;
+
+            // Append the row to the table body
+            dataTable.appendChild(row);
+
+            // Add delete functionality to the delete button
+            const deleteBtn = row.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', function() {
+                dataTable.removeChild(row); // Remove the row from the table
+            });
+
+            // Clear the form
+            form.reset();
+        });
+    </script>
+</body>
+</html>
